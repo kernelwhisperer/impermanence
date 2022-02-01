@@ -1,21 +1,21 @@
-import './App.css';
-import { useEffect, useState } from 'react';
+import "./App.css";
+import React, { useEffect, useState } from "react";
 
-const baseUrl = "https://source.unsplash.com/1920x1080/?city"
+const baseUrl = "https://source.unsplash.com/1920x1080/?moon";
 
-function App () {
-  const [imageSrc, setImageSrc] = useState()
+function App() {
+  const [imageSrc, setImageSrc] = useState();
 
   useEffect(() => {
     fetch(baseUrl)
-      .then(response => response.blob())
+      .then((response) => response.blob())
       .then(URL.createObjectURL)
       .then(setImageSrc);
-  }, [])
+  }, []);
 
   return (
-    <div className="App">
-        {imageSrc && <img src={imageSrc} alt="logo" />}
+    <div className="app" style={{ background: `url(${imageSrc})` }}>
+      <h1>Hello</h1>
     </div>
   );
 }
