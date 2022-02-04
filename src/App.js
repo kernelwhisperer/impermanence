@@ -8,6 +8,17 @@ import CssBaseline from "@mui/material/CssBaseline";
 import React, { useCallback, useEffect, useState } from "react";
 import { fetchImageUrl } from "./api";
 import "./App.css";
+import styled from "@emotion/styled";
+
+const StyledApp = styled.div`
+  height: 100%;
+
+  background-size: cover;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 function App() {
   const [imageSrc, setImageSrc] = useState();
@@ -24,7 +35,7 @@ function App() {
   return (
     <>
       <CssBaseline />
-      <div className="app" style={{ background: `url(${imageSrc})` }}>
+      <StyledApp className="app" style={{ background: `url(${imageSrc})` }}>
         <IconButton
           aria-label="refresh image"
           color="primary"
@@ -33,7 +44,7 @@ function App() {
         >
           <Refresh />
         </IconButton>
-      </div>
+      </StyledApp>
     </>
   );
 }
