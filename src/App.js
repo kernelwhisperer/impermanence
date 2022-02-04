@@ -1,22 +1,40 @@
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+import { Refresh } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
+import React, { useCallback, useEffect, useState } from "react";
+import { fetchImageUrl } from "./api";
 import "./App.css";
-import React, { useEffect, useState } from "react";
-
-const baseUrl = "https://source.unsplash.com/1920x1080/?moon";
 
 function App() {
   const [imageSrc, setImageSrc] = useState();
 
-  useEffect(() => {
-    fetch(baseUrl)
-      .then((response) => response.blob())
-      .then(URL.createObjectURL)
-      .then(setImageSrc);
+  const refreshImage = useCallback(async () => {
+    const imgSrc = await fetchImageUrl();
+    setImageSrc(imgSrc);
   }, []);
 
+  useEffect(() => {
+    refreshImage();
+  }, [refreshImage]);
+
   return (
-    <div className="app" style={{ background: `url(${imageSrc})` }}>
-      <h1>Hello</h1>
-    </div>
+    <>
+      <CssBaseline />
+      <div className="app" style={{ background: `url(${imageSrc})` }}>
+        <IconButton
+          aria-label="refresh image"
+          color="primary"
+          onClick={refreshImage}
+          size="large"
+        >
+          <Refresh />
+        </IconButton>
+      </div>
+    </>
   );
 }
 
