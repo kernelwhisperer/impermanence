@@ -27,45 +27,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "eslintConfig": {
-    "env": {
-      "browser": true,
-      "es2020": true,
-      "node": true
-    },
-    "extends": [
-      "standard",
-      "react-app",
-      "react-app/jest",
-      "eslint:recommended",
-      "plugin:react/recommended",
-      "plugin:prettier/recommended",
-      "prettier"
-    ],
-    "ignorePatterns": [
-      "public/**/*",
-      "package-lock.json"
-    ],
-    "parserOptions": {
-      "ecmaFeatures": {
-        "jsx": true
-      },
-      "ecmaVersion": 11,
-      "sourceType": "module"
-    },
-    "plugins": [
-      "react",
-      "prettier"
-    ],
-    "settings": {
-      "react": {
-        "version": "detect"
-      }
-    },
-    "rules": {
-      "prettier/prettier": "error"
-    }
-  },
   "browserslist": {
     "production": [
       ">0.2%",
