@@ -1,52 +1,29 @@
+import React from "react";
+import CssBaseline from "@mui/material/CssBaseline";
+import { createTheme, ThemeProvider } from "@mui/material";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-import { Refresh } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
-import CssBaseline from "@mui/material/CssBaseline";
-import React, { useCallback, useEffect, useState } from "react";
-import { fetchImageUrl } from "./api";
 import "./App.css";
-import styled from "@emotion/styled";
+import { FrontPage } from "./pages/FrontPage";
 
-const StyledApp = styled.div`
-  height: 100%;
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#ffffff",
+    },
+    secondary: {
+      main: "#ffffff",
+    },
+  },
+});
 
-  background-size: cover;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-function App() {
-  const [imageSrc, setImageSrc] = useState();
-
-  const refreshImage = useCallback(async () => {
-    const imgSrc = await fetchImageUrl();
-    setImageSrc(imgSrc);
-  }, []);
-
-  useEffect(() => {
-    refreshImage();
-  }, [refreshImage]);
-
+export function App() {
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
-      <StyledApp className="app" style={{ background: `url(${imageSrc})` }}>
-        <IconButton
-          aria-label="refresh image"
-          color="primary"
-          onClick={refreshImage}
-          size="large"
-        >
-          <Refresh />
-        </IconButton>
-      </StyledApp>
-    </>
+      <FrontPage />
+    </ThemeProvider>
   );
 }
-
-export default App;
