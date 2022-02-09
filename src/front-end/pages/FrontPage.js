@@ -1,13 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Refresh } from "@mui/icons-material";
 import {
+  Button,
   CircularProgress,
   Fade,
   IconButton,
   LinearProgress,
 } from "@mui/material";
 import styled from "@emotion/styled";
-import { fetchNewImageUrl } from "../api";
+import { fetchNewImageUrl } from "../../common/unsplash-api";
 
 const MainContainer = styled.div`
   height: 100%;
@@ -81,6 +82,7 @@ export function FrontPage() {
             <CircularProgress size={24} style={{ position: "absolute" }} />
           </Fade>
         </IconButton>
+        <Button variant="text">Set as wallpaper</Button>
       </ButtonContainer>
     </MainContainer>
   );

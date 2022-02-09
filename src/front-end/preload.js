@@ -1,3 +1,6 @@
+const { ipcRenderer } = require("electron");
+console.log(ipcRenderer.sendSync("synchronous-message", "pinga")); // prints "pong"
+
 window.addEventListener("DOMContentLoaded", () => {
   const replaceText = (selector, text) => {
     const element = document.getElementById(selector);
