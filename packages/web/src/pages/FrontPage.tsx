@@ -34,9 +34,11 @@ const ButtonContainer = styled.div`
   align-items: center;
 `;
 
+type ProgressBarProps = { visible: boolean };
+
 const ProgressBar = styled(LinearProgress, {
   shouldForwardProp: (prop) => prop !== "visible",
-})`
+})<ProgressBarProps>`
   position: absolute;
   width: 100%;
 
@@ -47,7 +49,7 @@ const ProgressBar = styled(LinearProgress, {
 `;
 
 export function FrontPage() {
-  const [imageSrc, setImageSrc] = useState();
+  const [imageSrc, setImageSrc] = useState("");
   const [loading, setLoading] = useState(false);
 
   const refreshImage = useCallback(async () => {
