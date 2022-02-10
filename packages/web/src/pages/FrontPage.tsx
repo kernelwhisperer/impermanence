@@ -1,5 +1,3 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Refresh } from "@mui/icons-material";
 import {
   Button,
   CircularProgress,
@@ -7,7 +5,10 @@ import {
   IconButton,
   LinearProgress,
 } from "@mui/material";
+import React, { useCallback, useEffect, useState } from "react";
+import { Refresh } from "@mui/icons-material";
 import styled from "@emotion/styled";
+//
 import { fetchNewImageUrl } from "../unsplash-api";
 
 const MainContainer = styled.div`
