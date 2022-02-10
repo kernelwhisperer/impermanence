@@ -8,7 +8,7 @@ import {
   LinearProgress,
 } from "@mui/material";
 import styled from "@emotion/styled";
-import { fetchNewImageUrl } from "../../common/unsplash-api";
+import { fetchNewImageUrl } from "../unsplash-api";
 
 const MainContainer = styled.div`
   height: 100%;

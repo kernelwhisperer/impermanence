@@ -1,11 +1,11 @@
 // Modules to control application life and create native browser window
 //
-import "./ipc";
-import path from "path";
-import { app, BrowserWindow } from "electron";
-// const path = require("path");
-// const { app, BrowserWindow } = require("electron");
-// require("./ipc");
+// import "./ipc";
+// import path from "path";
+// import { app, BrowserWindow } from "electron";
+const path = require("path");
+const { app, BrowserWindow } = require("electron");
+require("./ipc");
 
 const createWindow = () => {
   // Create the browser window.
@@ -13,7 +13,7 @@ const createWindow = () => {
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, "../front-end/preload.js"),
+      preload: path.join(__dirname, "./preload.js"),
     },
   });
 

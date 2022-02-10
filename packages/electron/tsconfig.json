@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "isolatedModules": true, // Ensure that Babel can safely transpile files in the TypeScript project
+    "module": "commonjs",
+    "sourceMap": true,
+    "outDir": "build",
+    "baseUrl": ".",
+    "paths": {
+      "*": [
+        "node_modules/*"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*"
+  ]
+}

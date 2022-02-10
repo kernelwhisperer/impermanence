@@ -1,6 +1,6 @@
 // import { ipcMain } from "electron";
 // import { getWallpaper } from "wallpaper";
-import { fetchNewImageUrl } from "../common/unsplash-api";
+import { fetchNewImageUrl } from "../../web/src/common/unsplash-api";
 //
 
 // ipcMain.on("synchronous-message", (event, arg) => {
