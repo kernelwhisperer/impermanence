@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
-    "isolatedModules": true, // Ensure that Babel can safely transpile files in the TypeScript project
-    "module": "commonjs",
+    // "isolatedModules": true, // Ensure that Babel can safely transpile files in the TypeScript project
+    // "esModuleInterop": true,
+    "module": "NodeNext",
+    // "target": "ES2017",
     "sourceMap": true,
     "outDir": "build",
     "baseUrl": ".",
@@ -12,6 +14,6 @@
     }
   },
   "include": [
-    "src/**/*"
+    "src",
   ]
 }

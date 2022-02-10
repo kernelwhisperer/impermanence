@@ -1,30 +1,24 @@
-// Modules to control application life and create native browser window
+import { BrowserWindow, app, ipcMain } from "electron";
+import path from "path";
 //
-// import "./ipc";
-// import path from "path";
-// import { app, BrowserWindow } from "electron";
-const path = require("path");
-const { app, BrowserWindow } = require("electron");
-require("./ipc");
+import { configureIpcMain } from "./ipc";
 
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, "./preload.js"),
     },
+    width: 800,
   });
 
-  mainWindow.webContents.openDevTools();
-
-  // and load the index.html of the app.
+  // Load the web app.
   // mainWindow.loadFile('index.html')
   mainWindow.loadURL("http://localhost:3000");
 
   // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
@@ -32,6 +26,7 @@ const createWindow = () => {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   createWindow();
+  configureIpcMain(ipcMain);
 
   app.on("activate", () => {
     // On macOS it's common to re-create a window in the app when the
