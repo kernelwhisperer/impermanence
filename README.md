@@ -36,3 +36,9 @@ npm install
 npm run bootstrap
 npm start
 ```
+
+TODO
+
+- SEO
+- analytics
+- tracking

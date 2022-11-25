@@ -5,8 +5,8 @@ import { configureIpcMain } from "./ipc";
 
 require("electron-reload")(__dirname, {
   electron: path.resolve(__dirname, "../node_modules/.bin/electron"),
-  // forceHardReset: true,
-  // hardResetMethod: "exit",
+  forceHardReset: true,
+  hardResetMethod: "exit",
 });
 
 const createWindow = () => {

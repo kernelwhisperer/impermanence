@@ -18,8 +18,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noImplicitAny": false,
-    "jsx": "react-jsx",
-    "outDir": "build"
+    "outDir": "build",
+    "jsx": "react-jsx"
   },
   "include": [
     "src"

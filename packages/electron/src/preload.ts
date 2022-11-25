@@ -1,13 +1,16 @@
-const { ipcRenderer } = require("electron");
+const { ipcRenderer, contextBridge } = require("electron");
 console.log(ipcRenderer.sendSync("synchronous-message", "ping"));
 
-window.addEventListener("DOMContentLoaded", () => {
-  const replaceText = (selector, text) => {
-    const element = document.getElementById(selector);
-    if (element) element.innerText = text;
-  };
+contextBridge.exposeInMainWorld("electron", {
+  notifications: {
+    send(message: string) {
+      ipcRenderer.send("notify", message);
+    },
+  },
+});
 
+window.addEventListener("DOMContentLoaded", () => {
   for (const dependency of ["chrome", "node", "electron"]) {
-    replaceText(`${dependency}-version`, process.versions[dependency]);
+    console.log(`${dependency}-version`, process.versions[dependency]);
   }
 });

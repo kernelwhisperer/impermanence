@@ -5,11 +5,12 @@ import {
   IconButton,
   LinearProgress,
 } from "@mui/material";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Refresh } from "@mui/icons-material";
 import styled from "@emotion/styled";
 //
-import { fetchNewImageUrl } from "../unsplash-api";
+import { fetchRandomImage } from "../unsplash-api";
+import { sendBlobToMain } from "../api/electron-api";
 
 const MainContainer = styled.div`
   height: 100%;
@@ -51,16 +52,28 @@ const ProgressBar = styled(LinearProgress, {
 
 export function FrontPage() {
   const [imageSrc, setImageSrc] = useState("");
+  const imageBlob = useRef<Blob | null>(null);
   const [loading, setLoading] = useState(false);
 
   const refreshImage = useCallback(async () => {
     setLoading(true);
 
-    const response = await fetchNewImageUrl();
-    setImageSrc(URL.createObjectURL(response.data));
+    const blob = await fetchRandomImage();
+
+    imageBlob.current = blob;
+    setImageSrc(URL.createObjectURL(blob));
 
     setLoading(false);
-  }, []);
+  }, [setLoading, setImageSrc, imageBlob]);
+
+  const saveImageToDisk = useCallback(async () => {
+    console.log(
+      "📜 LOG > saveImageToDisk > imageBlob.size",
+      imageBlob.current?.size
+    );
+    if (imageBlob.current === null) return;
+    sendBlobToMain("Unknown image", imageBlob.current);
+  }, [imageBlob]);
 
   useEffect(() => {
     refreshImage();
@@ -85,7 +98,9 @@ export function FrontPage() {
             <CircularProgress size={24} style={{ position: "absolute" }} />
           </Fade>
         </IconButton>
-        <Button variant="text">Set as wallpaper</Button>
+        <Button variant="text" onClick={saveImageToDisk}>
+          Set image
+        </Button>
       </ButtonContainer>
     </MainContainer>
   );
