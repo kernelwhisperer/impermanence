@@ -3,11 +3,11 @@ import path from "path";
 //
 import { configureIpcMain } from "./ipc";
 
-require("electron-reload")(__dirname, {
-  electron: path.resolve(__dirname, "../node_modules/.bin/electron"),
-  forceHardReset: true,
-  hardResetMethod: "exit",
-});
+// require("electron-reload")(__dirname, {
+//   electron: path.resolve(__dirname, "../node_modules/.bin/electron"),
+//   forceHardReset: true,
+//   hardResetMethod: "exit",
+// });
 
 const createWindow = () => {
   // Create the browser window.
@@ -20,8 +20,8 @@ const createWindow = () => {
   });
 
   // Load the web app.
-  // mainWindow.loadFile('index.html')
-  mainWindow.loadURL("http://localhost:3000");
+  mainWindow.loadFile("./build/index.html");
+  // mainWindow.loadURL("http://localhost:3000");
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();

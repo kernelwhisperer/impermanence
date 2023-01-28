@@ -46,6 +46,12 @@ node -v
 # v16.13.2
 ```
 
+```sh
+npm run build
+cp ../web/build . -r
+npm run make
+```
+
 ### TODO
 
 - SEO

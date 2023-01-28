@@ -2,10 +2,11 @@
   "name": "impermanence-electron",
   "version": "1.0.0",
   "main": "./build/start.js",
+  "description": "An example Electron app",
   "private": true,
   "scripts": {
     "postinstall": "npm run build",
-    "start": "concurrently --kill-others 'npm run build:watch' 'npm run start-electron'",
+    "start": "electron-forge start",
     "start-electron": "electron .",
     "prebuild": "rm -rf ./build",
     "build": "tsc",
@@ -14,11 +15,18 @@
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "check-types": "tsc --noEmit",
-    "check-types:watch": "npm run check-types -- --watch"
+    "check-types:watch": "npm run check-types -- --watch",
+    "package": "electron-forge package -p win32 --arch=x64",
+    "make": "electron-forge make -p win32 --arch=x64"
   },
-  "author": "",
+  "author": "Daniel Constantin",
   "license": "ISC",
   "devDependencies": {
+    "@electron-forge/cli": "^6.0.4",
+    "@electron-forge/maker-deb": "^6.0.4",
+    "@electron-forge/maker-rpm": "^6.0.4",
+    "@electron-forge/maker-squirrel": "^6.0.4",
+    "@electron-forge/maker-zip": "^6.0.4",
     "@typescript-eslint/eslint-plugin": "^5.11.0",
     "@typescript-eslint/parser": "^5.11.0",
     "concurrently": "^7.0.0",
@@ -35,6 +43,7 @@
     "typescript": "^4.6.0-dev.20220210"
   },
   "dependencies": {
+    "electron-squirrel-startup": "^1.0.0",
     "wallpaper": "^6.1.1"
   }
 }
