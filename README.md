@@ -37,7 +37,16 @@ npm run bootstrap
 npm start
 ```
 
-TODO
+### Versions
+
+```sh
+npm -v
+# 8.4.0
+node -v
+# v16.13.2
+```
+
+### TODO
 
 - SEO
 - analytics

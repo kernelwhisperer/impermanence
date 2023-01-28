@@ -4,6 +4,7 @@
   "main": "./build/start.js",
   "private": true,
   "scripts": {
+    "postinstall": "npm run build",
     "start": "concurrently --kill-others 'npm run build:watch' 'npm run start-electron'",
     "start-electron": "electron .",
     "prebuild": "rm -rf ./build",

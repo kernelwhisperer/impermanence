@@ -18,6 +18,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "postinstall": "npm run build",
     "start": "BROWSER=none react-scripts start",
     "build": "react-scripts build",
     "build:types": "tsc --declaration --emitDeclarationOnly",
