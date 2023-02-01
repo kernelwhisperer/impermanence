@@ -1,6 +1,6 @@
 import { wait } from "./utils";
 
-const RANDOM_IMAGE_URL = "https://source.unsplash.com/1920x1080/?space";
+const RANDOM_IMAGE_URL = "https://source.unsplash.com/3840x2160/"; // ?space
 
 let lastImageUrl = "";
 
