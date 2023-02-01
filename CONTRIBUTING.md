@@ -3,8 +3,7 @@
 ## Getting started
 
 ```sh
-npm install
-npm run bootstrap
+npm i
 npm start
 ```
 

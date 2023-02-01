@@ -1,5 +1,5 @@
 {
-  "name": "impermanence-front",
+  "name": "web",
   "version": "0.0.1",
   "private": true,
   "license": "UNLICENSED",
@@ -9,8 +9,8 @@
   },
   "homepage": "./",
   "scripts": {
-    "postinstall": "npm run build",
     "start": "BROWSER=none react-scripts start",
+    "prebuild": "rm -rf ./build",
     "build": "react-scripts build",
     "build:types": "tsc --declaration --emitDeclarationOnly",
     "lint": "eslint .",

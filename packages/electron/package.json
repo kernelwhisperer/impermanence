@@ -12,9 +12,7 @@
   "keywords": [],
   "main": "./build/start.js",
   "scripts": {
-    "postinstall": "npm run build",
-    "start": "electron-forge start",
-    "start-electron": "electron .",
+    "start": "concurrently 'npm run build:watch' 'electron-forge start' --kill-others --restart-tries 1 --restart-after 500 --prefix '{command}' --prefix-colors 'blue,cyan'",
     "prebuild": "rm -rf ./build",
     "build": "tsc",
     "build:watch": "tsc --watch",
