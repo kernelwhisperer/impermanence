@@ -1,9 +1,12 @@
 {
-  "name": "impermanence",
-  "version": "1.0.0",
+  "name": "root",
+  "version": "n/a",
   "private": true,
-  "description": "tbd",
-  "dependencies": {},
+  "license": "UNLICENSED",
+  "author": {
+    "name": "Daniel Constantin",
+    "email": "hello@danielconstantin.net"
+  },
   "scripts": {
     "clean": "git clean -fxd",
     "bootstrap": "lerna bootstrap",
@@ -11,8 +14,7 @@
     "build": "lerna run build",
     "lint": "lerna run --parallel lint"
   },
-  "author": "",
-  "license": "ISC",
+  "dependencies": {},
   "devDependencies": {
     "lerna": "^4.0.0"
   }
