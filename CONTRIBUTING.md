@@ -1,13 +1,6 @@
 # Contributing
 
-## Getting started
-
-```sh
-npm i
-npm start
-```
-
-### Versions
+## Prerequisites
 
 ```sh
 npm -v
@@ -16,14 +9,16 @@ node -v
 # v16.13.2
 ```
 
+## Getting started
+
 ```sh
-npm run build
-cp ../web/build . -r
-npm run make
+npm i
+npm start
 ```
 
-### TODO
+## Build for production
 
-- SEO
-- analytics
-- tracking
+```sh
+npm run build
+npm run make
+```

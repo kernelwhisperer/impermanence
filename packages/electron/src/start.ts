@@ -1,4 +1,4 @@
-import { BrowserWindow, app, ipcMain } from "electron";
+import { BrowserWindow, Menu, app, ipcMain } from "electron";
 import path from "path";
 //
 import { configureIpcMain } from "./ipc";
@@ -13,6 +13,8 @@ if (!PROD_ENV) {
   });
 }
 
+Menu.setApplicationMenu(null);
+
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -25,13 +27,12 @@ const createWindow = () => {
 
   // Load the web app.
   if (PROD_ENV) {
-    mainWindow.loadFile("./build/index.html");
+    mainWindow.loadFile("./web-build/index.html");
   } else {
     mainWindow.loadURL("http://localhost:3000");
+    // Open the DevTools.
+    mainWindow.webContents.openDevTools();
   }
-
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
