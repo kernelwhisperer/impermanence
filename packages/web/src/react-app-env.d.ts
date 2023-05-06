@@ -8,4 +8,5 @@ interface ElectronAPI {
   notifications: {
     send: (message: string) => void;
   };
+  sendImage: (base64Image: string) => void;
 }

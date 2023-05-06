@@ -1,6 +1,5 @@
-// import { Notification } from "electron";
+import { Notification, app } from "electron";
 import { mkdir, writeFile } from "node:fs/promises";
-import { app } from "electron";
 
 export function configureIpcMain(ipcMain: Electron.IpcMain) {
   ipcMain.on("synchronous-message", (event, arg) => {
@@ -8,11 +7,11 @@ export function configureIpcMain(ipcMain: Electron.IpcMain) {
     event.returnValue = "pong";
   });
   ipcMain.on("notify", (_, message: string) => {
-    // const wallpaper = await import("wallpaper");
-    // await getWallpaper.getWallpaper()
-    changeWallpaper(message);
     console.log("📜 LOG > ipcMain.on notify > message");
-    // new Notification({ body: message, title: "Notification" }).show();
+    new Notification({ body: message, title: "Notification" }).show();
+  });
+  ipcMain.on("set-image", (_, base64Image: string) => {
+    changeWallpaper(base64Image);
   });
 }
 
@@ -29,8 +28,7 @@ async function changeWallpaper(image: string) {
 
   console.log("📜 LOG > changeWallpaper > saveDirectory", tempDir);
   console.log(
-    "📜 LOG > changeWallpaper > wallpllaper",
+    "📜 LOG > changeWallpaper > wallpaper",
     await setWallpaper(filePath)
   );
 }
-// /usr/share/backgrounds/gnome/adwaita-timed.xml

@@ -1,18 +1,30 @@
-import { BrowserWindow, app, ipcMain } from "electron";
+import { BrowserWindow, Menu, app, ipcMain } from "electron";
 import path from "path";
 //
 import { configureIpcMain } from "./ipc";
 
-// require("electron-reload")(__dirname, {
-//   electron: path.resolve(__dirname, "../node_modules/.bin/electron"),
-//   forceHardReset: true,
-//   hardResetMethod: "exit",
-// });
+const PROD_ENV = app.isPackaged;
+
+if (!PROD_ENV) {
+  require("electron-reload")(__dirname, {
+    electron: path.resolve(__dirname, "../node_modules/.bin/electron"),
+    forceHardReset: true,
+    hardResetMethod: "exit",
+  });
+}
+
+Menu.setApplicationMenu(null);
 
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     height: 600,
+    // titleBarOverlay: {
+    //   color: "#2f3241",
+    //   symbolColor: "#74b1be",
+    //   // height: 60,
+    // },
+    // titleBarStyle: "hidden",
     webPreferences: {
       preload: path.join(__dirname, "./preload.js"),
     },
@@ -20,11 +32,13 @@ const createWindow = () => {
   });
 
   // Load the web app.
-  mainWindow.loadFile("./build/index.html");
-  // mainWindow.loadURL("http://localhost:3000");
-
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  if (PROD_ENV) {
+    mainWindow.loadFile("./web-build/index.html");
+  } else {
+    mainWindow.loadURL("http://localhost:3000");
+    // Open the DevTools.
+    mainWindow.webContents.openDevTools();
+  }
 };
 
 // This method will be called when Electron has finished
