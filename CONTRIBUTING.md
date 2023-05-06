@@ -20,5 +20,4 @@ npm start
 
 ```sh
 npm run build
-npm run make
 ```

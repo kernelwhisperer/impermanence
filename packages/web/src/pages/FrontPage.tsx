@@ -5,12 +5,16 @@ import {
   IconButton,
   LinearProgress,
 } from "@mui/material";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { Refresh } from "@mui/icons-material";
 import styled from "@emotion/styled";
 //
 import { fetchRandomImage } from "../unsplash-api";
-import { sendBlobToMain } from "../api/electron-api";
+import { sendImageToElectron } from "../api/electron-api";
 
 const MainContainer = styled.div`
   height: 100%;
@@ -51,37 +55,39 @@ const ProgressBar = styled(LinearProgress, {
 `;
 
 export function FrontPage() {
-  const [imageSrc, setImageSrc] = useState("");
-  const imageBlob = useRef<Blob | null>(null);
+  const [base64Image, setBase64Image] = useState<string>('');
   const [loading, setLoading] = useState(false);
 
   const refreshImage = useCallback(async () => {
     setLoading(true);
 
-    const blob = await fetchRandomImage();
+    const base64Image = await fetchRandomImage();
 
-    imageBlob.current = blob;
-    setImageSrc(URL.createObjectURL(blob));
-
+    setBase64Image(base64Image);
     setLoading(false);
-  }, [setLoading, setImageSrc, imageBlob]);
+  }, [setLoading, setBase64Image]);
 
   const saveImageToDisk = useCallback(async () => {
-    console.log(
-      "📜 LOG > saveImageToDisk > imageBlob.size",
-      imageBlob.current?.size
-    );
-    if (imageBlob.current === null) return;
-    sendBlobToMain("Unknown image", imageBlob.current);
-  }, [imageBlob]);
+    if (!base64Image) return;
+    sendImageToElectron("Unknown image", base64Image);
+  }, [base64Image]);
 
-  useEffect(() => {
-    refreshImage();
-  }, [refreshImage]);
+  // useEffect(() => {
+  //   localStorage.setItem("FrontPage:base64Image", base64Image);
+  // }, [base64Image]);
+
+  // useEffect(() => {
+  //   const base64Image = localStorage.getItem("FrontPage:base64Image");
+  //   console.log("📜 LOG > localStorage:getItem > base64Image:", base64Image);
+  //   if (base64Image) {
+  //     setBase64Image(base64Image);
+  //   }
+  // }, [setBase64Image]);
 
   return (
     <MainContainer>
-      <Background style={{ backgroundImage: `url(${imageSrc})` }} />
+      {/* <img src={imageBlob}></img> */}
+      <Background style={{ backgroundImage: `url(${base64Image})` }} />
       <ProgressBar variant="indeterminate" visible={loading} />
       <ButtonContainer>
         <IconButton

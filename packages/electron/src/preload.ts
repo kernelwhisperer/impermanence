@@ -7,6 +7,9 @@ contextBridge.exposeInMainWorld("electron", {
       ipcRenderer.send("notify", message);
     },
   },
+  sendImage(base64Image: string) {
+    ipcRenderer.send("set-image", base64Image);
+  },
 });
 
 window.addEventListener("DOMContentLoaded", () => {
