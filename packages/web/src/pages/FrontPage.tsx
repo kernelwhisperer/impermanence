@@ -1,13 +1,6 @@
-import {
-  Button,
-  CircularProgress,
-  Skeleton,
-  alpha,
-} from "@mui/material";
+import { Button, CircularProgress, Skeleton, alpha } from "@mui/material";
 import React, { useCallback, useState } from "react";
-import {
-  NavigateNext,
-} from "@mui/icons-material";
+import { NavigateNext } from "@mui/icons-material";
 import styled from "@emotion/styled";
 //
 import { fetchRandomImage } from "../unsplash-api";
@@ -71,10 +64,9 @@ export function FrontPage() {
   const nextImage = useCallback(async () => {
     setLoading(true);
 
-    const base64Image = await fetchRandomImage();
-    console.log(base64Image);
+    const { asBase64 } = await fetchRandomImage();
 
-    setBase64Image(base64Image);
+    setBase64Image(asBase64);
     setLoading(false);
   }, [setLoading, setBase64Image]);
 
