@@ -3,13 +3,15 @@ export async function wait(interval: number) {
 }
 
 export async function blobToBase64(blob: Blob): Promise<string> {
-  return new Promise((onSuccess, onError) => {
+  return new Promise((resolve, reject) => {
     try {
       const reader = new FileReader();
-      reader.onload = function () { onSuccess(this.result as string) };
+      reader.onload = function () {
+        resolve(this.result as string);
+      };
       reader.readAsDataURL(blob);
     } catch (err) {
-      onError(err);
+      reject(err);
     }
   });
-};
+}

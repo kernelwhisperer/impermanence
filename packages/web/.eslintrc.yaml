@@ -22,6 +22,8 @@ plugins:
   - react
   - prettier
   - "@typescript-eslint"
+  - sort-keys-fix
+  - simple-import-sort
 settings:
   react:
     version: detect
@@ -29,8 +31,9 @@ parser: "@typescript-eslint/parser"
 rules:
   no-unused-vars: warn
   prettier/prettier: warn
-  sort-imports: [warn, { allowSeparatedGroups: true }]
-  sort-keys: warn
   sort-vars: warn
   "@typescript-eslint/member-ordering":
     [warn, { default: { order: alphabetically } }]
+  sort-keys-fix/sort-keys-fix: "warn"
+  simple-import-sort/imports: "warn"
+  simple-import-sort/exports: "warn"

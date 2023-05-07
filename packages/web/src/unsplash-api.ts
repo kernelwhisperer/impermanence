@@ -1,16 +1,17 @@
-import { blobToBase64, wait } from "./utils";
-import { Random } from "unsplash-js/dist/methods/photos/types"
+import { Random } from "unsplash-js/dist/methods/photos/types";
 
-const ACCESS_KEY = "kgy2dYcQjx4oeo5STQD8zKIYiozmj8ZqHFOi5Pi2pDs"
+import { blobToBase64 } from "./utils";
+
+const ACCESS_KEY = "kgy2dYcQjx4oeo5STQD8zKIYiozmj8ZqHFOi5Pi2pDs";
 const RANDOM_IMAGE_URL = `https://api.unsplash.com/photos/random?client_id=${ACCESS_KEY}`; // ?space
 
 type RandomApiResponse = Random & {
-  views: number
   tags_preview: Array<{
-    type: string,
-    title: string
-  }>
-}
+    title: string;
+    type: string;
+  }>;
+  views: number;
+};
 
 export async function fetchRandomImage() {
   const response = await fetch(RANDOM_IMAGE_URL);
@@ -18,31 +19,43 @@ export async function fetchRandomImage() {
   //
   const downloadUrl = body.urls.full;
   // fix type
-  // Avoid watermarked images from Unsplash Plus 
+  // Avoid watermarked images from Unsplash Plus
   // if (!downloadUrl.includes('plus.')) {
   //   console.log("📜 LOG > fetchRandomImage > skipping");
   //   // await wait(750); // prevent spam
   //   return fetchRandomImage();
   // }
-  
+
   const imgRes = await fetch(downloadUrl);
   const blob = await imgRes.blob();
-  const asBase64 = await blobToBase64(blob)
+  const asBase64 = await blobToBase64(blob);
   //
   const siteUrl = body.links.html;
   const { name: authorName } = body.user;
-  const { width, height, color, created_at: createdAt, description, alt_description: altDescription, views, location, tags_preview } = body
+  const {
+    width,
+    height,
+    color,
+    created_at: createdAt,
+    description,
+    alt_description: altDescription,
+    views,
+    location,
+    tags_preview: tagsPreview,
+  } = body;
   //
   return {
-    authorName,
+    altDescription,
     asBase64,
-    width, height,
+    authorName,
+    color,
     createdAt,
     description,
-    altDescription,
-    views,
+    height,
+    location,
     siteUrl,
-    color,
-    location, tags_preview
-  }
+    tagsPreview,
+    views,
+    width,
+  };
 }

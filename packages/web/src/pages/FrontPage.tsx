@@ -1,10 +1,10 @@
-import { Button, CircularProgress, Skeleton, alpha } from "@mui/material";
-import React, { useCallback, useState } from "react";
-import { NavigateNext } from "@mui/icons-material";
 import styled from "@emotion/styled";
-//
-import { fetchRandomImage } from "../unsplash-api";
+import { NavigateNext } from "@mui/icons-material";
+import { alpha, Button, CircularProgress, Skeleton } from "@mui/material";
+import React, { useCallback, useState } from "react";
+
 import { sendImageToElectron } from "../api/electron-api";
+import { fetchRandomImage } from "../unsplash-api";
 import { DEFAULT_IMG } from "./default-image";
 
 const MainContainer = styled.div`
