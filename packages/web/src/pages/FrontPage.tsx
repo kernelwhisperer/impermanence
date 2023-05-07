@@ -101,14 +101,14 @@ export function FrontPage() {
             color={"secondary"}
             //  fontFamily={"Roboto mono"}
           >
-            <b>Alt description</b> {imageResult.altDescription}
+            Alt description — {imageResult.altDescription}
             <br />
-            <b>Publish on</b>{" "}
+            Published on —{" "}
             {new Date(imageResult.createdAt).toLocaleDateString([], {
               dateStyle: "long",
             })}
             <br />
-            <b>Views</b>{" "}
+            Views —{" "}
             <Typography
               fontWeight="300"
               fontFamily={"Roboto mono"}
@@ -120,7 +120,7 @@ export function FrontPage() {
               }).format(imageResult.views)}
             </Typography>
             <br />
-            <b>Resolution</b>{" "}
+            Resolution —{" "}
             <Typography
               fontWeight="300"
               fontFamily={"Roboto mono"}
@@ -129,19 +129,19 @@ export function FrontPage() {
               {imageResult.width}x{imageResult.height}
             </Typography>
             <br />
-            <b>Url</b>{" "}
+            Url —{" "}
             <Link
               href={imageResult.siteUrl}
               rel="noopener noreferrer"
               target="_blank"
+              color="secondary"
             >
-              {imageResult.siteUrl}
+              {imageResult.siteUrl.replace("https://", "")}
             </Link>
             <br />
             {imageResult.tagsPreview.length > 0 && (
               <>
-                <b>Tags</b>{" "}
-                {imageResult.tagsPreview.map((x) => x.title).join(", ")}.
+                Tags — {imageResult.tagsPreview.map((x) => x.title).join(", ")}.
               </>
             )}
           </Typography>
