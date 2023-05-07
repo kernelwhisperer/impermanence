@@ -1,10 +1,8 @@
 module.exports = {
-  packagerConfig: {},
-  rebuildConfig: {},
   makers: [
     {
-      name: "@electron-forge/maker-squirrel",
       config: {},
+      name: "@electron-forge/maker-squirrel",
     },
     // {
     //   name: '@electron-forge/maker-zip',
@@ -19,4 +17,6 @@ module.exports = {
     //   config: {},
     // },
   ],
+  packagerConfig: {},
+  rebuildConfig: {},
 };

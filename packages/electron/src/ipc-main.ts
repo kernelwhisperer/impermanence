@@ -1,5 +1,7 @@
-import { BrowserWindow, IpcMainEvent, Notification, app } from "electron";
 import { mkdir, writeFile } from "node:fs/promises";
+
+import { app, BrowserWindow, IpcMainEvent, Notification } from "electron";
+
 import { PaletteMode } from "./preload";
 import { isWindows } from "./utils";
 
