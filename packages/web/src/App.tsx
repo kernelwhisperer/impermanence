@@ -99,7 +99,7 @@ export function App() {
         sx={{
           background: 'transparent',
           boxShadow: "none",
-          "-webkit-app-region": "drag",
+          "WebkitAppRegion": "drag",
         }}
       >
         <Toolbar sx={{ paddingX: 1 }} disableGutters>

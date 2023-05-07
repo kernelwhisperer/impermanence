@@ -8,7 +8,7 @@ export function Settings(props) {
     <>
       <IconButton
         sx={{
-          "-webkit-app-region": "no-drag",
+          "WebkitAppRegion": "no-drag",
         }}
         size={"small"}
         onClick={() => setMode(mode === "light" ? "dark" : "light")}
