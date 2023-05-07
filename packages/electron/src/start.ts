@@ -2,7 +2,7 @@ import { BrowserWindow, Menu, app, ipcMain } from "electron";
 import path from "path";
 //
 import { isProduction, isWindows } from "./utils";
-import { configureIpcMain } from "./ipc";
+import { configureIpcMain } from "./ipc-main";
 
 if (!isProduction) {
   const executable = isWindows ? "electron.cmd" : "electron";
