@@ -1,24 +1,25 @@
 import { BrowserWindow, Menu, app, ipcMain } from "electron";
 import path from "path";
 //
+import { isProduction, isWindows } from "./utils";
 import { configureIpcMain } from "./ipc";
 
-const PROD_ENV = app.isPackaged;
-
-if (!PROD_ENV) {
+if (!isProduction) {
+  const executable = isWindows ? "electron.cmd" : "electron";
   require("electron-reload")(__dirname, {
-    electron: path.resolve(__dirname, "../node_modules/.bin/electron.cmd"),
+    electron: path.resolve(__dirname, "../node_modules/.bin", executable),
     forceHardReset: true,
     hardResetMethod: "exit",
   });
 }
 
-// Menu.setApplicationMenu(null);
+// Hide the "File Edit View Window Help" submenu
+Menu.setApplicationMenu(null);
 
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    height: 600,
+    height: isProduction ? 600 : 1600,
     titleBarOverlay: {
       color: "#121212",
       symbolColor: "#fff",
@@ -31,12 +32,12 @@ function createWindow() {
   });
 
   // Load the web app.
-  if (PROD_ENV) {
+  if (isProduction) {
     mainWindow.loadFile("./web-build/index.html");
   } else {
     mainWindow.loadURL("http://localhost:3000");
     // Open the DevTools.
-    // mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
   }
 
   return mainWindow;

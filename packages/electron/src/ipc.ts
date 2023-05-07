@@ -1,6 +1,7 @@
 import { BrowserWindow, IpcMainEvent, Notification, app } from "electron";
 import { mkdir, writeFile } from "node:fs/promises";
 import { PaletteMode } from "./preload";
+import { isWindows } from "./utils";
 
 export function configureIpcMain(
   ipcMain: Electron.IpcMain,
@@ -40,7 +41,9 @@ function createSetModeHandler(window: BrowserWindow) {
   };
 
   return function handleSetMode(event: IpcMainEvent, mode: PaletteMode) {
-    window.setTitleBarOverlay(TITLE_BAR_OPTS[mode]);
+    if (isWindows) {
+      window.setTitleBarOverlay(TITLE_BAR_OPTS[mode]);
+    }
     event.returnValue = true;
   };
 }
