@@ -22,6 +22,8 @@
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@fontsource/roboto": "^4.5.2",
+    "@fontsource/roboto-mono": "^4.5.10",
+    "@fontsource/roboto-serif": "^4.5.12",
     "@mui/icons-material": "^5.3.1",
     "@mui/material": "^5.4.0",
     "@testing-library/jest-dom": "^5.16.1",
@@ -30,6 +32,7 @@
     "axios": "^0.25.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "unsplash-js": "^7.0.15",
     "vite": "^4.0.4",
     "web-vitals": "^2.1.4"
   },
@@ -51,7 +54,6 @@
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-sort-keys-fix": "^1.1.2",
     "prettier": "^2.5.1",
-    "typescript": "^4.5.5",
-    "unsplash-js": "^7.0.15"
+    "typescript": "^4.5.5"
   }
 }

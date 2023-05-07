@@ -1,15 +1,24 @@
 import styled from "@emotion/styled";
 import { NavigateNext } from "@mui/icons-material";
-import { alpha, Button, CircularProgress, Skeleton } from "@mui/material";
+import {
+  alpha,
+  Box,
+  Button,
+  CircularProgress,
+  Link,
+  Skeleton,
+  Stack,
+  Typography,
+} from "@mui/material";
 import React, { useCallback, useState } from "react";
 
 import { sendImageToElectron } from "../api/electron-api";
-import { fetchRandomImage } from "../unsplash-api";
+import { fetchRandomImage, ImageResult } from "../unsplash-api";
 import { DEFAULT_IMG } from "./default-image";
 
 const MainContainer = styled.div`
   height: ${(props) =>
-    `calc(100% - ${props.theme.mixins.toolbar.minHeight}px - 16px)`};
+    `calc(100vh - ${props.theme.mixins.toolbar.minHeight}px - 16px)`};
   display: flex;
   flex-direction: column;
   margin: ${(props) => props.theme.spacing(1)};
@@ -30,75 +39,136 @@ const ImagePlaceholder = styled(Skeleton)`
   border-radius: ${(props) => props.theme.shape.borderRadius * 2}px;
 `;
 
-const ButtonContainer = styled.div`
+const MetadataContainer = styled(Stack)`
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
 
   padding: ${(props) => props.theme.spacing(1)};
-  padding-top: ${(props) => props.theme.spacing(4)};
+  padding-top: ${(props) => props.theme.spacing(10)};
   background: linear-gradient(
     360deg,
     ${(props) => alpha(props.theme.palette.background.default, 1)} 0%,
-    ${(props) => alpha(props.theme.palette.background.default, 0.8)} 33%,
+    ${(props) => alpha(props.theme.palette.background.default, 0.8)} 50%,
     transparent 100%
   );
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const NextButtonContainer = styled.div`
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
 `;
 
 export function FrontPage() {
-  const [base64Image, setBase64Image] = useState<string>(DEFAULT_IMG);
+  const [imageResult, setImageResult] = useState<ImageResult>({
+    asBase64: DEFAULT_IMG,
+  });
+  console.log("📜 LOG > FrontPage > imageResult:", imageResult);
+
   const [loading, setLoading] = useState(false);
 
   const nextImage = useCallback(async () => {
     setLoading(true);
 
-    const { asBase64 } = await fetchRandomImage();
+    const img = await fetchRandomImage();
+    setImageResult(img);
 
-    setBase64Image(asBase64);
     setLoading(false);
-  }, [setLoading, setBase64Image]);
+  }, [setLoading, setImageResult]);
 
   const saveImageToDisk = useCallback(async () => {
-    if (!base64Image) return;
-    sendImageToElectron("Unknown image", base64Image);
-  }, [base64Image]);
+    if (!imageResult) return;
+    sendImageToElectron("Unknown image", imageResult.asBase64);
+  }, [imageResult]);
 
   return (
     <MainContainer>
       {loading ? (
         <ImagePlaceholder animation="wave" variant="rectangular" />
       ) : (
-        <Image style={{ backgroundImage: `url(${base64Image})` }} />
+        <Image style={{ backgroundImage: `url(${imageResult.asBase64})` }} />
       )}
-      <NextButtonContainer></NextButtonContainer>
-      <ButtonContainer>
-        <Button variant="outlined" color="secondary" onClick={saveImageToDisk}>
-          Set as wallpaper
-        </Button>
-        <Button
-          onClick={nextImage}
-          color="primary"
-          variant="outlined"
-          disabled={loading}
-          startIcon={
-            loading ? <CircularProgress size={16} /> : <NavigateNext />
-          }
-        >
-          Next
-        </Button>
-      </ButtonContainer>
+      <MetadataContainer gap={1}>
+        <Typography variant="h2" fontWeight={"400"} fontFamily={"Roboto serif"}>
+          {imageResult.authorName}
+        </Typography>
+        {imageResult.description && (
+          <Typography variant="h5" fontWeight="300" color={"secondary"}>
+            {imageResult.description}
+          </Typography>
+        )}
+
+        {imageResult.altDescription && (
+          <Typography
+            variant="body1"
+            fontWeight="300"
+            color={"secondary"}
+            //  fontFamily={"Roboto mono"}
+          >
+            <b>Alt description</b> {imageResult.altDescription}
+            <br />
+            <b>Publish on</b>{" "}
+            {new Date(imageResult.createdAt).toLocaleDateString([], {
+              dateStyle: "long",
+            })}
+            <br />
+            <b>Views</b>{" "}
+            <Typography
+              fontWeight="300"
+              fontFamily={"Roboto mono"}
+              sx={{ display: "inline-block" }}
+            >
+              {new Intl.NumberFormat([], {
+                maximumFractionDigits: 0,
+                notation: "compact",
+              }).format(imageResult.views)}
+            </Typography>
+            <br />
+            <b>Resolution</b>{" "}
+            <Typography
+              fontWeight="300"
+              fontFamily={"Roboto mono"}
+              sx={{ display: "inline-block" }}
+            >
+              {imageResult.width}x{imageResult.height}
+            </Typography>
+            <br />
+            <b>Url</b>{" "}
+            <Link
+              href={imageResult.siteUrl}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              {imageResult.siteUrl}
+            </Link>
+            <br />
+            {imageResult.tagsPreview.length > 0 && (
+              <>
+                <b>Tags</b>{" "}
+                {imageResult.tagsPreview.map((x) => x.title).join(", ")}.
+              </>
+            )}
+          </Typography>
+        )}
+        <Stack flexDirection="row" justifyContent="space-between">
+          <Button
+            size="large"
+            variant="outlined"
+            color="primary"
+            onClick={saveImageToDisk}
+          >
+            Set as wallpaper
+          </Button>
+          <Button
+            onClick={nextImage}
+            color="primary"
+            variant="outlined"
+            size="large"
+            disabled={loading}
+            startIcon={
+              loading ? <CircularProgress size={16} /> : <NavigateNext />
+            }
+          >
+            Next
+          </Button>
+        </Stack>
+      </MetadataContainer>
     </MainContainer>
   );
 }
