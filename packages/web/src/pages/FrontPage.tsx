@@ -1,67 +1,78 @@
 import {
   Button,
   CircularProgress,
-  Fade,
-  IconButton,
-  LinearProgress,
+  Skeleton,
+  alpha,
 } from "@mui/material";
-import React, {
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
-import { Refresh } from "@mui/icons-material";
+import React, { useCallback, useState } from "react";
+import {
+  NavigateNext,
+} from "@mui/icons-material";
 import styled from "@emotion/styled";
 //
 import { fetchRandomImage } from "../unsplash-api";
 import { sendImageToElectron } from "../api/electron-api";
+import { DEFAULT_IMG } from "./default-image";
 
 const MainContainer = styled.div`
-  height: 100%;
+  height: ${(props) =>
+    `calc(100% - ${props.theme.mixins.toolbar.minHeight}px - 16px)`};
   display: flex;
+  flex-direction: column;
+  margin: ${(props) => props.theme.spacing(1)};
+  position: relative;
 `;
 
-const Background = styled.div`
-  position: absolute;
-
-  width: 100%;
-  height: 100%;
+const Image = styled.div`
+  flex-grow: 1;
 
   transition: background-image 0.4s linear;
   background-size: cover;
   background-position: center;
+  border-radius: ${(props) => props.theme.shape.borderRadius * 2}px;
+`;
+
+const ImagePlaceholder = styled(Skeleton)`
+  flex-grow: 1;
+  border-radius: ${(props) => props.theme.shape.borderRadius * 2}px;
 `;
 
 const ButtonContainer = styled.div`
-  flex: 1;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  padding: ${(props) => props.theme.spacing(1)};
+  padding-top: ${(props) => props.theme.spacing(4)};
+  background: linear-gradient(
+    360deg,
+    ${(props) => alpha(props.theme.palette.background.default, 1)} 0%,
+    ${(props) => alpha(props.theme.palette.background.default, 0.8)} 33%,
+    transparent 100%
+  );
 
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 `;
 
-type ProgressBarProps = { visible: boolean };
-
-const ProgressBar = styled(LinearProgress, {
-  shouldForwardProp: (prop) => prop !== "visible",
-})<ProgressBarProps>`
+const NextButtonContainer = styled.div`
   position: absolute;
-  width: 100%;
-
-  background: none;
-
-  transition: opacity 0.225s linear;
-  opacity: ${(props) => (props.visible ? 1 : 0)};
+  right: 0;
+  top: 0;
+  bottom: 0;
 `;
 
 export function FrontPage() {
-  const [base64Image, setBase64Image] = useState<string>('');
+  const [base64Image, setBase64Image] = useState<string>(DEFAULT_IMG);
   const [loading, setLoading] = useState(false);
 
-  const refreshImage = useCallback(async () => {
+  const nextImage = useCallback(async () => {
     setLoading(true);
 
     const base64Image = await fetchRandomImage();
+    console.log(base64Image);
 
     setBase64Image(base64Image);
     setLoading(false);
@@ -72,40 +83,28 @@ export function FrontPage() {
     sendImageToElectron("Unknown image", base64Image);
   }, [base64Image]);
 
-  // useEffect(() => {
-  //   localStorage.setItem("FrontPage:base64Image", base64Image);
-  // }, [base64Image]);
-
-  // useEffect(() => {
-  //   const base64Image = localStorage.getItem("FrontPage:base64Image");
-  //   console.log("📜 LOG > localStorage:getItem > base64Image:", base64Image);
-  //   if (base64Image) {
-  //     setBase64Image(base64Image);
-  //   }
-  // }, [setBase64Image]);
-
   return (
     <MainContainer>
-      {/* <img src={imageBlob}></img> */}
-      <Background style={{ backgroundImage: `url(${base64Image})` }} />
-      <ProgressBar variant="indeterminate" visible={loading} />
+      {loading ? (
+        <ImagePlaceholder animation="wave" variant="rectangular" />
+      ) : (
+        <Image style={{ backgroundImage: `url(${base64Image})` }} />
+      )}
+      <NextButtonContainer></NextButtonContainer>
       <ButtonContainer>
-        <IconButton
-          aria-label="refresh image"
+        <Button variant="outlined" color="secondary" onClick={saveImageToDisk}>
+          Set as wallpaper
+        </Button>
+        <Button
+          onClick={nextImage}
           color="primary"
-          onClick={refreshImage}
-          size="large"
+          variant="outlined"
           disabled={loading}
+          startIcon={
+            loading ? <CircularProgress size={16} /> : <NavigateNext />
+          }
         >
-          <Fade in={!loading}>
-            <Refresh />
-          </Fade>
-          <Fade in={loading}>
-            <CircularProgress size={24} style={{ position: "absolute" }} />
-          </Fade>
-        </IconButton>
-        <Button variant="text" onClick={saveImageToDisk}>
-          Set image
+          Next
         </Button>
       </ButtonContainer>
     </MainContainer>

@@ -1,17 +1,22 @@
-// const { ipcRenderer } = window.require("electron");
+import { PaletteMode } from "@mui/material";
+
+declare global {
+  interface Window { electron: ElectronAPI; }
+}
+
+interface ElectronAPI {
+  notifications: {
+    send: (message: string) => void;
+  };
+  sendImage: (base64Image: string) => Promise<void>;
+  setMode: (mode: PaletteMode) => boolean;
+}
+
 
 export async function sendImageToElectron(fileName, base64: string) {
   // remove "data:mime/type;base64," prefix from data url
   const sanitized = base64.substring(base64.indexOf(",") + 1);
-  window.electron.sendImage(sanitized);
-
-  // const reader = new FileReader();
-  // reader.onload = function () {
-  //   if (reader.readyState === 2) {
-  //     const buffer = Buffer.from(reader.result as ArrayBuffer);
-  //     // ipcRenderer.send("SAVE_FILE", fileName, buffer);
-  //     console.log(`Saving ${JSON.stringify({ fileName, size: blob.size })}`);
-  //   }
-  // };
-  // reader.readAsArrayBuffer(blob);
+  await window.electron.sendImage(sanitized);
 }
+
+export const setElectronMode = window.electron.setMode;

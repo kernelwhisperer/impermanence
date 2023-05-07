@@ -6,8 +6,15 @@ export function Settings(props) {
   const { mode, setMode } = props;
   return (
     <>
-      <IconButton onClick={() => setMode(mode === "light" ? "dark" : "light")}>
-        {mode === "dark" ? <LightModeOutlined /> : <DarkModeOutlined />}
+      <IconButton
+        sx={{
+          "-webkit-app-region": "no-drag",
+        }}
+        size={"small"}
+        onClick={() => setMode(mode === "light" ? "dark" : "light")}
+        color="primary"
+      >
+        {mode === "dark" ? <LightModeOutlined fontSize="small" /> : <DarkModeOutlined fontSize="small" />}
       </IconButton>
     </>
   );

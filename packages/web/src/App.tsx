@@ -9,48 +9,100 @@ import {
   Toolbar,
   PaletteMode,
   ThemeOptions,
+  Theme as MaterialUITheme,
 } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
-import React, { useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 //
 import { FrontPage } from "./pages/FrontPage";
 import { Settings } from "./Settings";
+import { setElectronMode } from "./api/electron-api";
+
+// Re-declare the emotion theme to have the properties of the MaterialUiTheme
+declare module "@emotion/react" {
+  export interface Theme extends MaterialUITheme {
+    // cast shape to number
+    shape: {
+      borderRadius: number;
+    };
+  }
+}
 
 const darkTheme: ThemeOptions = {
   palette: {
     mode: "dark",
     primary: {
-      main: "#fff",
+      main: "rgb(255,255,255)",
     },
     secondary: {
-      main: "#fff",
+      main: "rgb(255,255,255)",
     },
-  }
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: "none",
+          background: "rgb(255,255,255, 0.15)",
+        },
+      },
+    },
+  },
 };
 
 const lightTheme: ThemeOptions = {
   palette: {
     primary: {
-      main: "#000",
+      main: "rgb(0,0,0)",
     },
     secondary: {
-      main: "#000",
+      main: "rgb(0,0,0)",
     },
-  }
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: "none",
+          background: "rgb(0,0,0, 0.15)",
+        },
+      },
+    },
+  },
 };
-
 export function App() {
-  const [mode, setMode] = useState<PaletteMode>("dark");
+  const [mode, setMuiMode] = useState<PaletteMode>("dark");
   const theme = useMemo(
-    () => createTheme(mode === "dark" ? darkTheme : lightTheme),
+    () =>
+      createTheme({
+        ...(mode === "dark" ? darkTheme : lightTheme),
+        mixins: {
+          toolbar: {
+            minHeight: 40,
+          },
+        },
+      }),
     [mode]
   );
+  const setMode = useCallback((mode: PaletteMode) => {
+    setElectronMode(mode);
+    setMuiMode(mode);
+  }, [setMuiMode])
+
+  console.log("📜 LOG > App > theme:", theme);
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppBar sx={{ background: "transparent", boxShadow: "none" }}>
-        <Toolbar sx={{flexDirection: "row-reverse"}}>
+      <AppBar
+        position="static"
+        sx={{
+          background: 'transparent',
+          boxShadow: "none",
+          "-webkit-app-region": "drag",
+        }}
+      >
+        <Toolbar sx={{ paddingX: 1 }} disableGutters>
           <Settings mode={mode} setMode={setMode} />
         </Toolbar>
       </AppBar>

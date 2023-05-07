@@ -1,5 +1,5 @@
 const { ipcRenderer, contextBridge } = require("electron");
-console.log(ipcRenderer.sendSync("synchronous-message", "ping"));
+export type PaletteMode = "light" | "dark";
 
 contextBridge.exposeInMainWorld("electron", {
   notifications: {
@@ -7,8 +7,11 @@ contextBridge.exposeInMainWorld("electron", {
       ipcRenderer.send("notify", message);
     },
   },
-  sendImage(base64Image: string) {
+  async sendImage(base64Image: string) {
     ipcRenderer.send("set-image", base64Image);
+  },
+  setMode(mode: PaletteMode) {
+    ipcRenderer.sendSync("set-mode", mode);
   },
 });
 
