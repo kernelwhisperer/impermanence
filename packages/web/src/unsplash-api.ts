@@ -27,10 +27,6 @@ export interface ImageResult {
     city: Nullable<string>;
     country: Nullable<string>;
     name: Nullable<string>;
-    position: {
-      latitude: Nullable<number>;
-      longitude: Nullable<number>;
-    };
   };
   siteUrl: string;
   tagsPreview: {
@@ -42,6 +38,7 @@ export interface ImageResult {
 }
 
 export async function fetchRandomImage(): Promise<ImageResult> {
+  console.log("📜 LOG > fetchRandomImage > start", new Date().toString());
   const response = await fetch(RANDOM_IMAGE_URL);
   const body: RandomApiResponse = await response.json();
   //
@@ -52,7 +49,7 @@ export async function fetchRandomImage(): Promise<ImageResult> {
     // await wait(750); // prevent spam
     return fetchRandomImage();
   }
-
+  //
   const imgRes = await fetch(downloadUrl);
   const blob = await imgRes.blob();
   const asBase64 = await blobToBase64(blob);

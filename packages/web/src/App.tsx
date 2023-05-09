@@ -24,7 +24,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import React, { useCallback, useMemo, useState } from "react";
 
 import { setElectronMode } from "./api/electron-api";
-import { FrontPage } from "./pages/FrontPage";
+import { FrontPage } from "./pages/FrontPage/FrontPage";
 import { Settings } from "./Settings";
 
 // Re-declare the emotion theme to have the properties of the MaterialUiTheme
@@ -54,7 +54,7 @@ const darkTheme: ThemeOptions = {
       main: "rgb(255,255,255)",
     },
     secondary: {
-      main: "rgb(170,170,170)",
+      main: "rgb(212,212,212)",
     },
   },
 };
@@ -100,8 +100,6 @@ export function App() {
     },
     [setMuiMode]
   );
-
-  console.log("📜 LOG > App > theme:", theme);
 
   return (
     <ThemeProvider theme={theme}>

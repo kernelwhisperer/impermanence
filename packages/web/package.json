@@ -16,7 +16,9 @@
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "check-types": "tsc --noEmit",
-    "check-types:watch": "npm run check-types -- --watch"
+    "check-types:watch": "npm run check-types -- --watch",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@emotion/react": "^11.7.1",
@@ -25,6 +27,7 @@
     "@fontsource/roboto-mono": "^4.5.10",
     "@fontsource/roboto-serif": "^4.5.12",
     "@mui/icons-material": "^5.3.1",
+    "@mui/lab": "^5.0.0-alpha.129",
     "@mui/material": "^5.4.0",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
@@ -33,11 +36,11 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "unsplash-js": "^7.0.15",
+    "usehooks-ts": "^2.9.1",
     "vite": "^4.0.4",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {
-    "@types/jest": "^27.4.0",
     "@types/node": "^17.0.17",
     "@types/react": "^17.0.39",
     "@types/react-dom": "^17.0.11",
@@ -53,7 +56,10 @@
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-sort-keys-fix": "^1.1.2",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "jsdom": "^22.0.0",
     "prettier": "^2.5.1",
-    "typescript": "^4.5.5"
+    "typescript": "^4.5.5",
+    "vitest": "^0.31.0"
   }
 }
