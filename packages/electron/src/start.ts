@@ -20,7 +20,9 @@ Menu.setApplicationMenu(null);
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    height: isProduction ? 600 : 1600,
+    height: 600,
+    minHeight: 480,
+    minWidth: 480,
     titleBarOverlay: {
       color: "#121212",
       symbolColor: "#fff",

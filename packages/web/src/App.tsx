@@ -64,7 +64,7 @@ const lightTheme: ThemeOptions = {
     MuiButton: {
       styleOverrides: {
         root: {
-          background: "rgb(0,0,0, 0.15)",
+          background: "rgb(0,0,0, 0.05)",
           textTransform: "none",
         },
       },

@@ -14,11 +14,13 @@ import { ImageMetadata } from "./ImageMetadata";
 
 const MainContainer = styled.div`
   height: ${(props) =>
-    `calc(100vh - ${props.theme.mixins.toolbar.minHeight}px - 16px)`};
+    `calc(100vh - ${props.theme.mixins.toolbar.minHeight}px - 8px)`};
   display: flex;
   flex-direction: column;
   margin: ${(props) => props.theme.spacing(1)};
+  margin-top: 0;
   position: relative;
+  overflow: hidden;
 `;
 
 const Image = styled.div`
@@ -27,29 +29,38 @@ const Image = styled.div`
   transition: background-image 0.4s linear;
   background-size: cover;
   background-position: center;
-  border-radius: ${(props) => props.theme.shape.borderRadius * 2}px;
+  border-radius: ${(props) => props.theme.shape.borderRadius * 2.5}px;
 `;
 
 const ImagePlaceholder = styled(Skeleton)`
   flex-grow: 1;
-  border-radius: ${(props) => props.theme.shape.borderRadius * 2}px;
+  border-radius: ${(props) => props.theme.shape.borderRadius * 2.5}px;
 `;
 
-const ImageOverlay = styled(Stack)`
+const ImageOverlay = styled(Stack)<{ hideOverlay: boolean }>`
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
 
   padding: ${(props) => props.theme.spacing(1)};
-  padding-top: ${(props) => props.theme.spacing(10)};
-  background: linear-gradient(
-    360deg,
-    ${(props) => alpha(props.theme.palette.background.default, 1)} 0%,
-    ${(props) => alpha(props.theme.palette.background.default, 0.7)} 45%,
-    ${(props) => alpha(props.theme.palette.background.default, 0.4)} 75%,
-    transparent 100%
-  );
+  padding-top: ${(props) => props.theme.spacing(6)};
+  background: ${(props) => {
+    if (props.hideOverlay) return "";
+    const color = props.theme.palette.background.default;
+
+    return `
+      linear-gradient(
+      360deg,
+      ${alpha(color, 1)} 0%,
+      ${alpha(color, 0.7)} 45%,
+      ${alpha(color, 0.3)} 75%,
+      ${alpha(color, 0.1)} 85%,
+      ${alpha(color, 0.01)} 95%,
+      transparent 100%
+    )
+      `;
+  }};
 `;
 
 export function FrontPage() {
@@ -111,21 +122,26 @@ export function FrontPage() {
   return (
     <MainContainer>
       {loading ? (
-        <ImagePlaceholder animation="wave" variant="rectangular" />
+        <ImagePlaceholder variant="rectangular" />
       ) : (
         <Image style={{ backgroundImage: `url(${imageResult.asBase64})` }} />
       )}
-      <ImageOverlay gap={2}>
-        <ImageMetadata imageResult={imageResult} />
+      <ImageOverlay gap={2} hideOverlay={loading}>
+        <ImageMetadata loading={loading} imageResult={imageResult} />
         <Stack flexDirection="row" justifyContent="space-between">
-          <Button
-            size="large"
-            variant="outlined"
-            color="primary"
-            onClick={saveImageToDisk}
-          >
-            Set as wallpaper
-          </Button>
+          {loading ? (
+            <Skeleton variant="rounded" height={42} width={160}></Skeleton>
+          ) : (
+            <Button
+              size="large"
+              variant="outlined"
+              color="primary"
+              disabled={loading}
+              onClick={saveImageToDisk}
+            >
+              Set as wallpaper
+            </Button>
+          )}
           <LoadingButton
             onClick={nextImage}
             color="primary"
