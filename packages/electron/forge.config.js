@@ -17,6 +17,8 @@ module.exports = {
     //   config: {},
     // },
   ],
-  packagerConfig: {},
+  packagerConfig: {
+    icon: "./src/app-icon", // no file extension required
+  },
   rebuildConfig: {},
 };
