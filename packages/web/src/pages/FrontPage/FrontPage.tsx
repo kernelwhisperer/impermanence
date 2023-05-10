@@ -65,12 +65,12 @@ const ImageOverlay = styled(Stack)<{ hideOverlay: boolean }>`
 
 export function FrontPage() {
   const [imageResult, setImageResult] = useState<ImageResult>({
-    altDescription: "Alt description",
+    altDescription: null,
     asBase64: DEFAULT_IMG,
     authorName: "Author",
     color: "#fff",
     createdAt: "12",
-    description: "Description",
+    description: null,
     downloadUrl: "website.org",
     height: 100,
     location: {
@@ -108,10 +108,12 @@ export function FrontPage() {
 
   const [intervalActive, setIntervalActive] = useState<boolean>(false);
   const startInterval = useCallback(() => {
+    if (intervalActive) return;
     setIntervalActive(true);
     handleAutoUpdate();
-  }, [setIntervalActive, handleAutoUpdate]);
-  useTimeout(startInterval, msUntilNextInterval());
+  }, [intervalActive, setIntervalActive, handleAutoUpdate]);
+
+  useTimeout(startInterval, intervalActive ? null : msUntilNextInterval());
 
   useInterval(
     handleAutoUpdate,
