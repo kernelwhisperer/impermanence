@@ -21,6 +21,7 @@ function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     height: 600,
+    icon: path.join(__dirname, "./app-icon.png"),
     minHeight: 480,
     minWidth: 480,
     titleBarOverlay: {
