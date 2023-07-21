@@ -1,6 +1,10 @@
 # Impermanence
 
-<p>Desktop app for managing wallpapers.</p>
+<p>Desktop app that lets you explore the world one photo at a time.</p>
+<img src="./docs/Screenshot_1.png" alt="Screenshot 1" />
+<img src="./docs/Screenshot_2.png" alt="Screenshot 2" />
+<img src="./docs/Screenshot_2b.png" alt="Screenshot 2b" />
+
 <br />
 
 <!-- TypeScript -->
