@@ -1,12 +1,5 @@
 # Impermanence
 
-<p>Desktop app that lets you explore the world one photo at a time.</p>
-<img src="./docs/Screenshot_1.png" alt="Screenshot 1" />
-<img src="./docs/Screenshot_2.png" alt="Screenshot 2" />
-<img src="./docs/Screenshot_2b.png" alt="Screenshot 2b" />
-
-<br />
-
 <!-- TypeScript -->
 <a target="_blank" rel="noopener noreferrer" href="https://typescriptlang.org/">
   <img src="https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white"
@@ -32,3 +25,10 @@
   <img src="https://img.shields.io/badge/Prettier-1A2C34?style=flat-square&logo=prettier&logoColor=F7BA3E"
     alt="Prettier" />
 </a>
+
+<p>Desktop app that lets you explore the world one photo at a time.</p>
+<img src="./docs/Screenshot_1.png" alt="Screenshot 1" />
+<img src="./docs/Screenshot_2.png" alt="Screenshot 2" />
+<img src="./docs/Screenshot_2b.png" alt="Screenshot 2b" />
+
+<br />
