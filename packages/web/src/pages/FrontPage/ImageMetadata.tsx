@@ -150,7 +150,6 @@ export function ImageMetadata({ loading, imageResult }: ImageMetadataProps) {
                 <LaunchOutlined fontSize="small" />{" "}
                 <Link
                   href={imageResult.siteUrl}
-                  rel="noopener noreferrer"
                   target="_blank"
                   color="secondary"
                   sx={{
