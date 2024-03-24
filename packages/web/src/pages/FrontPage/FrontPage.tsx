@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { NavigateNext } from "@mui/icons-material";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { alpha, Button, Skeleton, Stack } from "@mui/material";
+import { Alert, alpha, Button, Skeleton, Stack } from "@mui/material";
 import React, { useCallback, useState } from "react";
 import { useInterval, useTimeout } from "usehooks-ts";
 
@@ -86,15 +86,19 @@ export function FrontPage() {
   });
 
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const nextImage = useCallback(async () => {
     setLoading(true);
+    setErrorMessage(null);
 
     try {
       const disallowedKeywords = $disallowedKeywords.get().split(",");
       const img = await fetchRandomImage(disallowedKeywords);
       setImageResult(img);
       return img;
+    } catch (error) {
+      setErrorMessage(String(error));
     } finally {
       setLoading(false);
     }
@@ -107,6 +111,7 @@ export function FrontPage() {
 
   const handleAutoUpdate = useCallback(async () => {
     const img = await nextImage();
+    if (!img) return;
     sendImageToElectron("Unknown image", img.asBase64);
   }, [nextImage]);
 
@@ -134,6 +139,11 @@ export function FrontPage() {
       )}
       <ImageOverlay gap={2} hideOverlay={loading}>
         <ImageMetadata loading={loading} imageResult={imageResult} />
+        {errorMessage && (
+          <Alert variant="outlined" severity="error">
+            {errorMessage}
+          </Alert>
+        )}
         <Stack flexDirection="row" justifyContent="space-between">
           {loading ? (
             <Skeleton variant="rounded" height={42} width={160}></Skeleton>
