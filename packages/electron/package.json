@@ -22,7 +22,7 @@
     "check-types": "tsc --noEmit",
     "check-types:watch": "npm run check-types -- --watch",
     "package": "electron-forge package -p win32 --arch=x64",
-    "make": "electron-forge make -p win32 --arch=x64"
+    "build-bin": "electron-forge make -p win32 --arch=x64"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.4",

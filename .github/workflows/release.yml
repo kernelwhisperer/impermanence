@@ -11,11 +11,20 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Install Wine
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo apt update
+          sudo apt install -y wine64 wine32
+
       - name: Install Dependencies
         run: npm install
 
-      - name: Build the apps
+      - name: Build the app
         run: npm run build
+
+      - name: Build the binaries
+        run: npm run build-bin
 
       - name: Release
         uses: softprops/action-gh-release@v1

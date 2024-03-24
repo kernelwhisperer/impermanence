@@ -16,7 +16,7 @@
     "lint:fix": "lerna run --parallel lint:fix",
     "prebuild": "rm -rf packages/electron/web-build && lerna run build --scope=web && cp -r packages/web/build packages/electron/web-build",
     "build": "lerna run build --scope=impermanence",
-    "postbuild": "lerna run make"
+    "build-bin": "lerna run build-bin"
   },
   "devDependencies": {
     "lerna": "^6.4.1"
