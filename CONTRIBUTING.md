@@ -26,10 +26,6 @@ Run `./packages/electron/out/make/squirrel.windows/x64/Impermanence-0.1.0 Setup.
 
 ## Create a release
 
-1. Edit version in electron package
-2. Create a new tag and push it
-
 ```sh
-git tag -a v0.1.0 -m "Release 0.1.0"
-git puh origin v0.1.0
+npx lerna version
 ```
