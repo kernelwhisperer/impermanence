@@ -25,7 +25,17 @@ module.exports = {
     // },
   ],
   packagerConfig: {
-    icon: "./src/app-icon", // no file extension required
+    appBundleId: "net.danielconstantin.impermanence",
+    appCategoryType: "public.app-category.utilities",
+    icon: "./src/app-icon",
+    name: "Impermanence",
+    win32metadata: {
+      CompanyName: "hello@danielconstantin.net",
+      FileDescription: "Desktop app for managing wallpapers.",
+      InternalName: "Impermanence",
+      OriginalFilename: "Impermanence.exe",
+      ProductName: "Impermanence",
+    },
   },
   rebuildConfig: {},
 };
