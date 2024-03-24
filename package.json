@@ -1,7 +1,6 @@
 {
   "name": "impermanence",
-  "version": "n/a",
-  "private": true,
+  "version": "1.0.0",
   "license": "UNLICENSED",
   "author": {
     "name": "Daniel Constantin",
@@ -17,7 +16,7 @@
     "prebuild": "rm -rf packages/electron/web-build && lerna run build --scope=impermanence-web && cp -r packages/web/build packages/electron/web-build",
     "build": "lerna run build --scope=impermanence-electron",
     "build-bin": "lerna run build-bin",
-    "version": "lerna version"
+    "version": "lerna version --force-publish"
   },
   "devDependencies": {
     "lerna": "^6.4.1"

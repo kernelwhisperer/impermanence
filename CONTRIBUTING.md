@@ -27,5 +27,5 @@ Run `./packages/electron/out/make/squirrel.windows/x64/Impermanence-0.1.0 Setup.
 ## Create a release
 
 ```sh
-npm run version <major|minor|patch>
+npm run version <new-version>
 ```
