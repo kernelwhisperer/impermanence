@@ -6,6 +6,7 @@
     "name": "Daniel Constantin",
     "email": "hello@danielconstantin.net"
   },
+  "description": "Desktop app for managing wallpapers.",
   "keywords": [],
   "main": "./build/start.js",
   "scripts": {
