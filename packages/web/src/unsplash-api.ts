@@ -5,7 +5,7 @@ import { blobToBase64 } from "./utils";
 
 const ACCESS_KEY = "kgy2dYcQjx4oeo5STQD8zKIYiozmj8ZqHFOi5Pi2pDs";
 // https://unsplash.com/documentation#get-a-random-photo
-const RANDOM_IMAGE_URL = `https://api.unsplash.com/photos/random?client_id=${ACCESS_KEY}&orientation=landscape&query=person`;
+const RANDOM_IMAGE_URL = `https://api.unsplash.com/photos/random?client_id=${ACCESS_KEY}&orientation=landscape`; // &query=person
 
 type RandomApiResponse = Random & {
   tags_preview: Array<{
