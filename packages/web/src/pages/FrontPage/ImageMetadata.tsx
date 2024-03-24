@@ -51,7 +51,7 @@ export function ImageMetadata({ loading, imageResult }: ImageMetadataProps) {
   const [expanded, setExpanded] = useState(false);
   const toggleExpanded = useCallback(
     () => setExpanded((x) => !x),
-    [setExpanded]
+    [setExpanded],
   );
 
   if (loading) {

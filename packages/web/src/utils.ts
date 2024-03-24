@@ -38,7 +38,7 @@ export function msUntilNextInterval(interval = DEFAULT_INTERVAL_MIN) {
     nextHours,
     nextMinutes,
     0,
-    0
+    0,
   );
 
   // console.log("📜 LOG > msUntilNextInterval > now:", now);

@@ -6,6 +6,7 @@ import React, { useCallback, useState } from "react";
 import { useInterval, useTimeout } from "usehooks-ts";
 
 import { sendImageToElectron } from "../../api/electron-api";
+import { $disallowedKeywords } from "../../stores/settings-store";
 import { fetchRandomImage, ImageResult } from "../../unsplash-api";
 import { msUntilNextInterval } from "../../utils";
 import { DEFAULT_INTERVAL_MS } from "../SettingsPage/default-settings";
@@ -89,11 +90,14 @@ export function FrontPage() {
   const nextImage = useCallback(async () => {
     setLoading(true);
 
-    const img = await fetchRandomImage();
-    setImageResult(img);
-
-    setLoading(false);
-    return img;
+    try {
+      const disallowedKeywords = $disallowedKeywords.get().split(",");
+      const img = await fetchRandomImage(disallowedKeywords);
+      setImageResult(img);
+      return img;
+    } finally {
+      setLoading(false);
+    }
   }, [setLoading, setImageResult]);
 
   const saveImageToDisk = useCallback(async () => {
@@ -118,7 +122,7 @@ export function FrontPage() {
   useInterval(
     handleAutoUpdate,
     // Delay in milliseconds or null to stop it
-    intervalActive ? DEFAULT_INTERVAL_MS : null
+    intervalActive ? DEFAULT_INTERVAL_MS : null,
   );
 
   return (

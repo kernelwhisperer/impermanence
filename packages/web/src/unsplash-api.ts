@@ -4,7 +4,8 @@ import { Random } from "unsplash-js/dist/methods/photos/types";
 import { blobToBase64 } from "./utils";
 
 const ACCESS_KEY = "kgy2dYcQjx4oeo5STQD8zKIYiozmj8ZqHFOi5Pi2pDs";
-const RANDOM_IMAGE_URL = `https://api.unsplash.com/photos/random?client_id=${ACCESS_KEY}`; // ?space
+// https://unsplash.com/documentation#get-a-random-photo
+const RANDOM_IMAGE_URL = `https://api.unsplash.com/photos/random?client_id=${ACCESS_KEY}&orientation=landscape&query=person`;
 
 type RandomApiResponse = Random & {
   tags_preview: Array<{
@@ -37,23 +38,13 @@ export interface ImageResult {
   width: number;
 }
 
-export async function fetchRandomImage(): Promise<ImageResult> {
-  console.log("📜 LOG > fetchRandomImage > start", new Date().toString());
+export async function fetchRandomImage(
+  disallowedKeywords: string[],
+): Promise<ImageResult> {
   const response = await fetch(RANDOM_IMAGE_URL);
   const body: RandomApiResponse = await response.json();
   //
   const downloadUrl = body.urls.full;
-  // Avoid watermarked images from Unsplash Plus
-  if (downloadUrl.includes("plus.")) {
-    console.log("📜 LOG > fetchRandomImage > skipping");
-    // await wait(750); // prevent spam
-    return fetchRandomImage();
-  }
-  //
-  const imgRes = await fetch(downloadUrl);
-  const blob = await imgRes.blob();
-  const asBase64 = await blobToBase64(blob);
-  //
   const siteUrl = body.links.html;
   const { name: authorName } = body.user;
   const {
@@ -67,6 +58,27 @@ export async function fetchRandomImage(): Promise<ImageResult> {
     location,
     tags_preview: tagsPreview,
   } = body;
+  // Avoid watermarked images from Unsplash Plus
+  if (downloadUrl.includes("plus.")) {
+    // console.log("📜 LOG > fetchRandomImage > skipping");
+    return fetchRandomImage(disallowedKeywords);
+  }
+  // Avoid images with disallowed keywords
+  if (
+    disallowedKeywords.some((keyword) => description?.includes(keyword)) ||
+    disallowedKeywords.some((keyword) => altDescription?.includes(keyword)) ||
+    disallowedKeywords.some((keyword) =>
+      tagsPreview.some((tag) => tag.title.includes(keyword)),
+    )
+  ) {
+    // console.log("📜 LOG > fetchRandomImage > skipping");
+    return fetchRandomImage(disallowedKeywords);
+  }
+
+  //
+  const imgRes = await fetch(downloadUrl);
+  const blob = await imgRes.blob();
+  const asBase64 = await blobToBase64(blob);
   //
   return {
     altDescription,

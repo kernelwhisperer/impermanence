@@ -91,14 +91,14 @@ export function App() {
           },
         },
       }),
-    [mode]
+    [mode],
   );
   const setMode = useCallback(
     (mode: PaletteMode) => {
       setElectronMode && setElectronMode(mode);
       setMuiMode(mode);
     },
-    [setMuiMode]
+    [setMuiMode],
   );
 
   return (
