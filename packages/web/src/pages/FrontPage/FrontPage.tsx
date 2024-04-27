@@ -6,7 +6,10 @@ import React, { useCallback, useState } from "react";
 import { useInterval, useTimeout } from "usehooks-ts";
 
 import { sendImageToElectron } from "../../api/electron-api";
-import { $disallowedKeywords } from "../../stores/settings-store";
+import {
+  $disallowedKeywords,
+  $includedKeywords,
+} from "../../stores/settings-store";
 import { fetchRandomImage, ImageResult } from "../../unsplash-api";
 import { msUntilNextInterval } from "../../utils";
 import { DEFAULT_INTERVAL_MS } from "../SettingsPage/default-settings";
@@ -94,7 +97,8 @@ export function FrontPage() {
 
     try {
       const disallowedKeywords = $disallowedKeywords.get().split(",");
-      const img = await fetchRandomImage(disallowedKeywords);
+      const includedKeywords = $includedKeywords.get().split(",");
+      const img = await fetchRandomImage(disallowedKeywords, includedKeywords);
       setImageResult(img);
       return img;
     } catch (error) {

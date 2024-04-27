@@ -9,6 +9,11 @@ node -v
 # v16.13.2
 ```
 
+```sh
+sudo apt update && sudo apt -y upgrade
+sudo apt install libnss3-dev libatk1.0-0 libatk-bridge2.0-0 libgdk-pixbuf2.0-0 libgtk-3-0 -y
+```
+
 ## Getting started
 
 ```sh

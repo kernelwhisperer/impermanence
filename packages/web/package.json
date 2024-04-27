@@ -8,7 +8,7 @@
   },
   "homepage": "./",
   "scripts": {
-    "dev": "vite --port 3000",
+    "dev": "vite --port 3000 --host --clearScreen=false",
     "prebuild": "rm -rf ./build",
     "build": "vite build",
     "build:types": "tsc --declaration --emitDeclarationOnly",
@@ -34,6 +34,7 @@
     "nanostores": "^0.10.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.3",
     "unsplash-js": "^7.0.19",
     "usehooks-ts": "^3.0.2",
     "vite": "^5.2.6",

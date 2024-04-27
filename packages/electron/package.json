@@ -14,7 +14,7 @@
     "dev": "concurrently \"npm run build:watch\" \"electron-forge start\" --kill-others --restart-tries 1 --restart-after 500 --prefix \"{command}\" --prefix-colors \"blue,cyan\"",
     "prebuild": "rm -rf ./build",
     "build": "tsc",
-    "build:watch": "tsc --watch",
+    "build:watch": "tsc --watch --preserveWatchOutput",
     "build:types": "tsc --declaration --emitDeclarationOnly",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",

@@ -22,9 +22,11 @@ import {
 } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import React, { useCallback, useMemo, useState } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import { setElectronMode } from "./api/electron-api";
 import { FrontPage } from "./pages/FrontPage/FrontPage";
+import { SettingsPage } from "./pages/SettingsPage/SettingsPage";
 import { Settings } from "./Settings";
 
 // Re-declare the emotion theme to have the properties of the MaterialUiTheme
@@ -116,7 +118,11 @@ export function App() {
           <Settings mode={mode} setMode={setMode} />
         </Toolbar>
       </AppBar>
-      <FrontPage />
+      <Routes>
+        <Route path="/" element={<FrontPage />} />
+        <Route path="/settings" element={<SettingsPage />} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
     </ThemeProvider>
   );
 }

@@ -5,7 +5,7 @@ import { blobToBase64 } from "./utils";
 
 const ACCESS_KEY = "kgy2dYcQjx4oeo5STQD8zKIYiozmj8ZqHFOi5Pi2pDs";
 // https://unsplash.com/documentation#get-a-random-photo
-const RANDOM_IMAGE_URL = `https://api.unsplash.com/photos/random?client_id=${ACCESS_KEY}&orientation=landscape`; // &query=person
+// const RANDOM_IMAGE_URL = `https://api.unsplash.com/photos/random?client_id=${ACCESS_KEY}&orientation=landscape`; // &query=person
 
 type RandomApiResponse = Random & {
   tags_preview: Array<{
@@ -40,7 +40,9 @@ export interface ImageResult {
 
 export async function fetchRandomImage(
   disallowedKeywords: string[],
+  includedKeywords: string[],
 ): Promise<ImageResult> {
+  const RANDOM_IMAGE_URL = `https://api.unsplash.com/photos/random?client_id=${ACCESS_KEY}&orientation=landscape&query=${includedKeywords}`; // &query=person
   const response = await fetch(RANDOM_IMAGE_URL);
   const body: RandomApiResponse = await response.json();
   //
@@ -61,7 +63,7 @@ export async function fetchRandomImage(
   // Avoid watermarked images from Unsplash Plus
   if (downloadUrl.includes("plus.")) {
     // console.log("📜 LOG > fetchRandomImage > skipping");
-    return fetchRandomImage(disallowedKeywords);
+    return fetchRandomImage(disallowedKeywords, includedKeywords);
   }
   // Avoid images with disallowed keywords
   if (
@@ -72,7 +74,7 @@ export async function fetchRandomImage(
     )
   ) {
     // console.log("📜 LOG > fetchRandomImage > skipping");
-    return fetchRandomImage(disallowedKeywords);
+    return fetchRandomImage(disallowedKeywords, includedKeywords);
   }
 
   //

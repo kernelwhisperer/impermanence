@@ -3,18 +3,10 @@ import {
   LightModeOutlined,
   SettingsRounded,
 } from "@mui/icons-material";
-import {
-  Drawer,
-  IconButton,
-  PaletteMode,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { useStore } from "@nanostores/react";
+import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
+import { IconButton, PaletteMode } from "@mui/material";
 import React from "react";
-
-import { $disallowedKeywords } from "./stores/settings-store";
+import { Link } from "react-router-dom";
 
 interface SettingsProps {
   mode: PaletteMode;
@@ -24,36 +16,26 @@ interface SettingsProps {
 export function Settings(props: SettingsProps) {
   const { mode, setMode } = props;
 
-  const [open, setOpen] = React.useState(false);
-
-  const toggleDrawer = (newOpen: boolean) => () => {
-    setOpen(newOpen);
-  };
-
-  const disallowedKeywords = useStore($disallowedKeywords);
-
   return (
     <>
       <IconButton
         sx={{ WebkitAppRegion: "no-drag" }}
         size="small"
         color="primary"
-        onClick={toggleDrawer(true)}
+        component={Link}
+        to="/"
+      >
+        <HomeRoundedIcon fontSize="small" />
+      </IconButton>
+      <IconButton
+        sx={{ WebkitAppRegion: "no-drag" }}
+        size="small"
+        color="primary"
+        component={Link}
+        to="/settings"
       >
         <SettingsRounded fontSize="small" />
       </IconButton>
-      <Drawer anchor="bottom" open={open} onClose={toggleDrawer(false)}>
-        <Stack sx={{ padding: 2 }} gap={2}>
-          <Typography variant="h6">Settings</Typography>
-          <TextField
-            label="Keywords to exclude"
-            fullWidth
-            variant="outlined"
-            value={disallowedKeywords}
-            onChange={(e) => $disallowedKeywords.set(e.target.value)}
-          />
-        </Stack>
-      </Drawer>
       <IconButton
         sx={{ WebkitAppRegion: "no-drag" }}
         size="small"
